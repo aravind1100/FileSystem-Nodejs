@@ -4,8 +4,14 @@ import fs from "fs";
 import { format } from "date-fns";
 
 const app = express();
-app.use(cors());   //Which domain,port
-const PORT = 4000; 
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+const PORT = 4000;
 const DIRECTORY = "TimeStamp";
 
 //API generation to write file
@@ -14,7 +20,7 @@ app.get("/writefile", (req, res) => {
   try {
     let today = format(new Date(), "dd-MM-yyyy-HH-mm-ss");
 
-    const filePath = `${DIRECTORY}/${today}`;
+    const filePath = `${DIRECTORY}/${today}.txt`;
     fs.writeFileSync(filePath, `${today}`, "utf8");
 
     res.status(201).send({ message: "File Created", filename: `${today}.txt` });
