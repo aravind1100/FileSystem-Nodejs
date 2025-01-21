@@ -14,7 +14,16 @@ app.use(
 const PORT = 4000;
 const DIRECTORY = "TimeStamp";
 
+
+
+if (!fs.existsSync(DIRECTORY)) {      // Ensure the DIRECTORY exists
+    fs.mkdirSync(DIRECTORY);
+    console.log(`Directory '${DIRECTORY}' created`);
+  }
+
+
 //API generation to write file
+
 
 app.get("/writefile", (req, res) => {
   try {
